@@ -1,0 +1,428 @@
+Script started on 2019-08-18 09:06:25-0400
+root@rohithnk-desktop: /home/rohithnk/Desktop root@rohithnk-desktop:/home/rohithnk/Desktop#
+> mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 3
+Server version: 5.7.27-0ubuntu0.18.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+4 rows in set (0.02 sec)
+
+mysql> create database student;
+Query OK, 1 row affected (0.00 sec)
+
+mysql>show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| student            |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql>use student;
+Database changed
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> create table student(usn varchar(10),name varchar(20),sem integer,sec char(10));
+Query OK, 0 rows affected (0.23 sec)
+
+mysql> desc student;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| usn   | varchar(10) | YES  |     | NULL    |       |
+| name  | varchar(20) | YES  |     | NULL    |       |
+| sem   | int(11)     | YES  |     | NULL    |       |
+| sec   | char(1)     | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> insert into student values('4mh17cs070','rohith',5,'c');
+Query OK, 1 row affected (0.00)
+
+mysql> insert into student values('4mh17cs121','karthik',5,'b');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into student values('4mh17cs069','rakshith',5,'c');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into student values('4mh17cs102','supreeth',5,'b');
+Query OK, 1 row affected (0.04 sec)
+
+myaql>insert into student values('4mh17cs068','rakesh',5,'a');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from student select * from student;
++------------+----------+------+------+
+| usn        | name     | sem  | sec  |
++------------+----------+------+------+
+| 4mh17cs070 | rohith   |    5 | c    |
+| 4mh17cs121 | karthik  |    5 | b    |
+| 4mh17cs069 | rakshith |    5 | c    |
+| 4mh17cs102 | supreeth |    5 | b    |
+| 4mh17cs068 | rakesh   |    5 | a    |
++------------+----------+------+------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student where sec='b' or sec='c';
++------------+----------+------+------+
+| usn        | name     | sem  | sec  |
++------------+----------+------+------+
+| 4mh17cs070 | rohith   |    5 | c    |
+| 4mh17cs121 | karthik  |    5 | b    |
+| 4mh17cs069 | rakshith |    5 | c    |
+| 4mh17cs102 | supreeth |    5 | b    |
++------------+----------+------+------+
+4 rows in set (0.00 sec)
+
+mysql> select * from student where sec!='b';
++------------+----------+------+------+
+| usn        | name     | sem  | sec  |
++------------+----------+------+------+
+| 4mh17cs070 | rohith   |    5 | c    |
+| 4mh17cs069 | rakshith |    5 | c    |
+| 4mh17cs068 | rakesh   |    5 | a    |
++------------+----------+------+------+
+3 rows in set (0.00 sec)
+
+mysql> select count(*) from student;
++----------+
+| count(*) |
++----------+
+|        5 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> update student
+    -> set name='likith'
+    -> where usn='4mh17cs121';
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student;
++------------+----------+------+------+
+| usn        | name     | sem  | sec  |
++------------+----------+------+------+
+| 4mh17cs070 | rohith   |    5 | c    |
+| 4mh17cs121 | likith   |    5 | b    |
+| 4mh17cs069 | rakshith |    5 | c    |
+| 4mh17cs102 | supreeth |    5 | b    |
+| 4mh17cs068 | rakesh   |    5 | a    |
++------------+----------+------+------+
+5 rows in set (0.00 sec)
+
+mysql> alter table student change sec section char(5);
+Query OK, 5 rows affected (0.67 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| usn     | varchar(10) | YES  |     | NULL    |       |
+| name    | varchar(20) | YES  |     | NULL    |       |
+| sem     | int(11)     | YES  |     | NULL    |       |
+| section | char(5)     | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql>select count(*) from student where section='b';
++----------+
+| count(*) |
++----------+
+|        2 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select usn,section from student where section='b' or 'c';
++------------+---------+
+| usn        | section |
++------------+---------+
+| 4mh17cs121 | b       |
+| 4mh17cs102 | b       |
++------------+---------+
+2 rows in set, 1 warning (0.00 sec)
+
+mysql> select usn,section from student where section='b' or 'c';
++------------+---------+
+| usn        | section |
++------------+---------+
+| 4mh17cs070 | c       |
+| 4mh17cs121 | b       |
+| 4mh17cs069 | c       |
+| 4mh17cs102 | b       |
++------------+---------+
+4 rows in set (0.00 sec)
+
+mysql> update student
+    -> set sem=7
+    -> where section='b';
+Query OK, 2 rows affected (0.04 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from student;
++------------+----------+------+---------+
+| usn        | name     | sem  | section |
++------------+----------+------+---------+
+| 4mh17cs070 | rohith   |    5 | c       |
+| 4mh17cs121 | likith   |    7 | b       |
+| 4mh17cs069 | rakshith |    5 | c       |
+| 4mh17cs102 | supreeth |    7 | b       |
+| 4mh17cs068 | rakesh   |    5 | a       |
++------------+----------+------+---------+
+5 rows in set (0.00 sec)
+
+mysql> alter table student add fee float;
+Query OK, 0 rows affected (0.52 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| usn     | varchar(10) | YES  |     | NULL    |       |
+| name    | varchar(20) | YES  |     | NULL    |       |
+| sem     | int(11)     | YES  |     | NULL    |       |
+| section | char(5)     | YES  |     | NULL    |       |
+| fee     | float       | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> update student set fee=50000;
+Query OK, 5 rows affected (0.03 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+
+mysql> select * from student;
++------------+----------+------+---------+-------+
+| usn        | name     | sem  | section | fee   |
++------------+----------+------+---------+-------+
+| 4mh17cs070 | rohith   |    5 | c       | 50000 |
+| 4mh17cs121 | likith   |    7 | b       | 50000 |
+| 4mh17cs069 | rakshith |    5 | c       | 50000 |
+| 4mh17cs102 | supreeth |    7 | b       | 50000 |
+| 4mh17cs068 | rakesh   |    5 | a       | 50000 |
++------------+----------+------+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> update student set fee=50000.55 where sem=7;
++------------+----------+------+---------+---------+
+| usn        | name     | sem  | section | fee     |
++------------+----------+------+---------+---------+
+| 4mh17cs070 | rohith   |    5 | c       |   50000 |
+| 4mh17cs121 | likith   |    7 | b       | 50000.6 |
+| 4mh17cs069 | rakshith |    5 | c       |   50000 |
+| 4mh17cs102 | supreeth |    7 | b       | 50000.6 |
+| 4mh17cs068 | rakesh   |    5 | a       |   50000 |
++------------+----------+------+---------+---------+
+5 rows in set (0.00 sec)
+
+mysql> update student 
+    -> set fee=65000.5
+    -> where usn='4mh17cs070';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql>select * from student;
++------------+----------+------+---------+---------+
+| usn        | name     | sem  | section | fee     |
++------------+----------+------+---------+---------+
+| 4mh17cs070 | rohith   |    5 | c       |  65000.5|
+| 4mh17cs121 | likith   |    7 | b       | 50000.6 |
+| 4mh17cs069 | rakshith |    5 | c       |   50000 |
+| 4mh17cs102 | supreeth |    7 | b       | 50000.6 |
+| 4mh17cs068 | rakesh   |    5 | a       |   50000 |
++------------+----------+------+---------+---------+
+5 rows in set (0.00 sec)
+
+mysql>update student 
+    -> set fee=70000.5 where usn='4mh17cs121';
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student;
++------------+----------+------+---------+---------+
+| usn        | name     | sem  | section | fee     |
++------------+----------+------+---------+---------+
+| 4mh17cs070 | rohith   |    5 | c       | 65000.5 |
+| 4mh17cs121 | likith   |    7 | b       | 70000.5 |
+| 4mh17cs069 | rakshith |    5 | c       |   50000 |
+| 4mh17cs102 | supreeth |    7 | b       | 50000.6 |
+| 4mh17cs068 | rakesh   |    5 | a       |   50000 |
++------------+----------+------+---------+---------+
+5 rows in set (0.00 sec)
+
+
+mysql> update student set fee=40000.5  where usn='4mh17cs102';
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update student set fee=50000.5 where usn='4mh17cs069';
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update student set fee=60000.5 where usn='4mh17cs068';
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student;
++------------+----------+------+---------+---------+
+| usn        | name     | sem  | section | fee     |
++------------+----------+------+---------+---------+
+| 4mh17cs070 | rohith   |    5 | c       | 65000.5 |
+| 4mh17cs121 | likith   |    7 | b       | 70000.5 |
+| 4mh17cs069 | rakshith |    5 | c       | 50000.5 |
+| 4mh17cs102 | supreeth |    7 | b       | 40000.5 |
+| 4mh17cs068 | rakesh   |    5 | a       | 60000.5 |
++------------+----------+------+---------+---------+
+5 rows in set (0.00 sec)
+
+mysql> select sum(fee) from student;
++----------+
+| sum(fee) |
++----------+
+| 285002.5 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select max(fee) from student;
++----------+
+| max(fee) |
++----------+
+|  70000.5 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select avg(fee) from student;
++----------+
+| avg(fee) |
++----------+
+|  57000.5 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> select max(fee),min(fee),avg(fee) from student;
++----------+----------+----------+
+| max(fee) | min(fee) | avg(fee) |
++----------+----------+----------+
+|  70000.5 |  40000.5 |  57000.5 |
++----------+----------+----------+
+1 row in set (0.00 sec)
+
+mysql> select max(fee),min(fee),avg(fee) from student where section='c';
++----------+----------+----------+
+| max(fee) | min(fee) | avg(fee) |
++----------+----------+----------+
+|  65000.5 |  50000.5 |  57500.5 |
++----------+----------+----------+
+1 row in set (0.00 sec)
+
+mysql> select * from student where fee<50000;
++------------+----------+------+---------+---------+
+| usn        | name     | sem  | section | fee     |
++------------+----------+------+---------+---------+
+| 4mh17cs102 | supreeth |    7 | b       | 40000.5 |
++------------+----------+------+---------+---------+
+1 row in set (0.00 sec)
+
+mysql> select sum(fee) as SUM_OF_FEE from student;
++------------+
+| SUM_OF_FEE |
++------------+
+|   285002.5 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> alter table student modify fee float;
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+mysql> alter table student drop fee;
+Query OK, 0 rows affected (0.52 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++------------+----------+------+---------+
+| usn        | name     | sem  | section |
++------------+----------+------+---------+
+| 4mh17cs070 | rohith   |    5 | c       |
+| 4mh17cs121 | likith   |    7 | b       |
+| 4mh17cs069 | rakshith |    5 | c       |
+| 4mh17cs102 | supreeth |    7 | b       |
+| 4mh17cs068 | rakesh   |    5 | a       |
++------------+----------+------+---------+
+5 rows in set (0.00 sec)
+
+mysql> delete from student where name='likith';
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from student;
++------------+----------+------+---------+
+| usn        | name     | sem  | section |
++------------+----------+------+---------+
+| 4mh17cs070 | rohith   |    5 | c       |
+| 4mh17cs069 | rakshith |    5 | c       |
+| 4mh17cs102 | supreeth |    7 | b       |
+| 4mh17cs068 | rakesh   |    5 | a       |
++------------+----------+------+---------+
+4 rows in set (0.00 sec)
+
+mysql> select * from student order by name;
++------------+----------+------+---------+
+| usn        | name     | sem  | section |
++------------+----------+------+---------+
+| 4mh17cs068 | rakesh   |    5 | a       |
+| 4mh17cs069 | rakshith |    5 | c       |
+| 4mh17cs070 | rohith   |    5 | c       |
+| 4mh17cs102 | supreeth |    7 | b       |
++------------+----------+------+---------+
+4 rows in set (0.00 sec)
+
+mysql> delete from student;
+Query OK, 4 rows affected (0.04 sec)
+
+mysql> select * from student order by name;
+Empty set (0.00 sec)
+
+mysql> desc student;
+ERROR 1146 (42S02): Table 'student.student' doesn't exist
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| student            |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> exit
+Bye
+root@rohithnk-desktop: /home/rohithnk/Desktoproot@rohithnk-desktop:/home/rohithnk/Desktop# exit
+exit
+
+Script done on 2019-08-18 10:45:58-0400
